@@ -10,7 +10,7 @@ class MissingMethodParameterTypehintRuleTest extends \PHPStan\Testing\RuleTestCa
 		return new MissingMethodParameterTypehintRule();
 	}
 
-	public function testRule(): void
+	public function testRuleTypehint(): void
 	{
 		$this->analyse([__DIR__ . '/data/missing-method-parameter-typehint.php'], [
 			[
@@ -32,6 +32,30 @@ class MissingMethodParameterTypehintRuleTest extends \PHPStan\Testing\RuleTestCa
 			[
 				'Method MissingMethodParameterTypehint\Foo::getBaz() has parameter $p3 with no typehint specified.',
 				42,
+			],
+		]);
+	}
+
+	public function testRuleArrayTypehint(): void
+	{
+		$this->analyse([__DIR__ . '/data/missing-array-types-in-method-parameter-typehint.php'], [
+			/* not detected by now
+			[
+				'Method MissingArrayValueTypeInMethodParameter\FooInterface::getFoo() has parameter $p1 of type array with no value typehint specified.',
+				11,
+			],
+			*/
+			[
+				'Method MissingArrayValueTypeInMethodParameter\FooParent::getBar() has parameter $p2 of type array with no value typehint specified.',
+				18,
+			],
+			[
+				'Method MissingArrayValueTypeInMethodParameter\Foo::getBar() has parameter $p2 of type array with no value typehint specified.',
+				39,
+			],
+			[
+				'Method MissingArrayValueTypeInMethodParameter\Foo::getBaz() has parameter $p4 with no typehint specified.',
+				47,
 			],
 		]);
 	}
